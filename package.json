@@ -1,0 +1,8 @@
+{
+  "name": "node-vulnerable",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "4.3.x",
+    "socket.io": "1.0.x"
+  }
+}
