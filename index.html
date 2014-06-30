@@ -20,7 +20,16 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script>
+      var imgInjection = function(str) {
+        if(str.indexOf('http') == 0){
+          return '<img width=125 src=' + str +'> <a href=' + str +'>Original</a>'
+        } else {
+          return str;
+        }
+      };
+
       var socket = io();
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
@@ -28,7 +37,9 @@
         return false;
       });
       socket.on('chat message', function(msg){
-        $('#messages').append($('<li>' + msg + '</li>'));
+        // Make sure to escape that nasty JS out.
+        // http://underscorejs.org/#escape
+        $('#messages').prepend($('<li>' + imgInjection(_.escape(msg)) + '</li>'));
       });
     </script>
   </body>
